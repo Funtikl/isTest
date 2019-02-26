@@ -10,20 +10,19 @@ const connection = mysql.createConnection({
   password:'rootpassword',
   database: 'sequelize_db'
 });
-connection.query(
-  'SELECT * FROM `table` WHERE `name` = "Page" AND `age` > 45',
-  function(err, results, fields) {
-    console.log(results); // results contains rows returned by server
-    console.log(fields); // fields contains extra meta data about results, if available
-  }
-);
+
 app.get('/', function(req, res){
-  res.send('hello world');
+  connection.query(
+    'SELECT * FROM `Users` ',
+    function(err, results, fields) {
+      res.send(results); // fields contains extra meta data about results, if available
+    }
+  );
 });
 
-const PORT = 6000;
+const PORT = 3000;
 
-db.sequelize.sync({ force: true }).then(() => {
+db.sequelize.sync().then(() => {
     app.listen(PORT, () => {
       console.log(`App listening on PORT ${PORT}`);
     });
